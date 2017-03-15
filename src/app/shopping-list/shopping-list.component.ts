@@ -1,3 +1,4 @@
+import { ShoppingListService } from '../services/shopping-list.service';
 import { Ingredient } from '../models/ingredient';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,9 +11,10 @@ export class ShoppingListComponent implements OnInit {
 
   public ingredientList:Ingredient[] = [];
 
-  constructor() { }
+  constructor(private shoppingListService:ShoppingListService) { }
 
   ngOnInit() {
+    this.ingredientList = this.shoppingListService.getIngredientList();
   }
 
 }
