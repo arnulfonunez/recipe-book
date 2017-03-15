@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Rx';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -9,11 +10,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class RecipesComponent implements OnInit, OnDestroy {
 
+private selectedRecipeSubscription:Subscription = null;
  public selectedRecipe:Recipe = null;
   constructor(private recipeService:RecipeService) { }
 
   ngOnInit() {
-    this.recipeService.recipeSelected.subscribe(
+    this.selectedRecipeSubscription = this.recipeService.recipeSelected.subscribe(
       (data) =>{
         this.selectedRecipe = data;
         console.log('test');
@@ -23,7 +25,7 @@ export class RecipesComponent implements OnInit, OnDestroy {
   }
 
 ngOnDestroy(){
-  this.recipeService.recipeSelected.unsubscribe();
+  this.selectedRecipeSubscription.unsubscribe();
 }
 
 }
