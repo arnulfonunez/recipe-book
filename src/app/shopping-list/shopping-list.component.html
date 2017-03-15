@@ -3,7 +3,9 @@
     <an-shopping-list-add></an-shopping-list-add>
     <hr>
     <ul class="list-group">
-      <a class="list-group-item" style="cursor: pointer" *ngFor="let ingredient of ingredientList"></a>
+      <a class="list-group-item" style="cursor: pointer" *ngFor="let ingredient of ingredientList">
+        Ingredient Name: {{ingredient.name}} | {{ingredient.amount}}
+      </a>
     </ul>
   </div>
 </div>

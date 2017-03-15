@@ -10,16 +10,17 @@ public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>();
 
   constructor() { 
 
+    //Start
     let limit:number = 5;
-  let ingredientLimit:number = 5;
-
-  for(let i =0; i < limit;i++){
-    let tempIng:Ingredient[] = [];
-    for(let j=0; j < ingredientLimit; j++){
-      tempIng.push(new Ingredient('' + i + '_' + j, j));
+    let ingredientLimit:number = 5;
+    for(let i =0; i < limit;i++){
+      let tempIng:Ingredient[] = [];
+      for(let j=0; j < ingredientLimit; j++){
+        tempIng.push(new Ingredient('' + i + '_' + j, j));
+      }
+    this.recipeList.push(new Recipe('Recipe:' + i, 'Description:' + i,'',tempIng));
     }
-   this.recipeList.push(new Recipe('Recipe:' + i, 'Description:' + i,'',tempIng));
-  }
+    //End
   }
 
   public getRecipeList():Recipe[]{
