@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RecipeItemComponent implements OnInit {
 
 @Input() public recipe:Recipe = null;
-public recipeId:number = null;
+@Input() public recipeId:number = 0;
 
   constructor() { }
 

@@ -31,6 +31,13 @@ public pushSelectedRecipe(recipe:Recipe):void{
   this.recipeSelected.emit(recipe);
 }
 
-
-
+public getRecipe(index:number): Recipe{
+  return this.recipeList[index];
+}
+public deleteRecipe(index:number): void{
+  this.recipeList.splice(index,1);
+}
+public addRecipe(recipe:Recipe):void{
+  this.recipeList.push(recipe);
+}
 }

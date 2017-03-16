@@ -11,8 +11,6 @@ import { Component, OnInit, Output } from '@angular/core';
 })
 export class RecipeListComponent implements OnInit {
 
-  
-
   public recipes:Recipe[] = [];
   
   constructor(private recipeService:RecipeService) { }
@@ -22,7 +20,7 @@ export class RecipeListComponent implements OnInit {
   }
 
 public onSelected(selectedRecipe:Recipe):void{
- this.recipeService.pushSelectedRecipe(selectedRecipe);
+ //this.recipeService.pushSelectedRecipe(selectedRecipe);
 }
 
 
