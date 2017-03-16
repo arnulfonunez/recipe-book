@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
-    <form id="shopping-list-add">
+
+    <form #myForm="ngForm" id="shopping-list-add" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="item-name">Name</label>
@@ -8,25 +9,31 @@
             type="text"
             id="item-name"
             required
-            class="form-control">
+            placeholder="Name"
+            name="itemName"
+            class="form-control" ngModel>
         </div>
 
         <div class="col-sm-2 form-group">
-          <label for="item-amount">Amount</label>
+          <label for="item-amount" >Amount</label>
           <input
             type="number"
             id="item-amount"
             required
-            class="form-control">
+            placeholder="Amount"
+            name="itemAmount"
+            class="form-control" ngModel>
         </div>
       </div>
+      
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit">Add</button>
+          <button class="btn btn-success" type="submit" [disabled]="!myForm.valid">Add</button>
           <button class="btn btn-danger" type="button">Delete Item</button>
           <button class="btn btn-primary" type="button">Clear</button>
         </div>
       </div>
     </form>
+
   </div>
 </div>

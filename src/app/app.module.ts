@@ -17,6 +17,7 @@ import {RecipeService} from './services/recipe.service';
 import {ShoppingListService} from './services/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start.component';
+import { NotFoundComponent } from './exceptions/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RecipeStartComponent } from './recipes/recipe-start.component';
     DropdownDirective,
     RecipeEditComponent,
     RecipeStartComponent,
-    RecipeStartComponent
+    RecipeStartComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -12,4 +12,8 @@ export class ShoppingListAddComponent implements OnInit {
   ngOnInit() {
   }
 
+  public onSubmit():void{
+    
+  }
+
 }

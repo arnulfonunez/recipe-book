@@ -6,7 +6,7 @@ import { Injectable,EventEmitter } from '@angular/core';
 export class RecipeService {
 
 private recipeList:Recipe[] = [];
-public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>();
+public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>(); //no longer used
 
   constructor() { 
 
@@ -27,6 +27,7 @@ public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>();
   return this.recipeList;
 }
 
+//No longer used
 public pushSelectedRecipe(recipe:Recipe):void{
   this.recipeSelected.emit(recipe);
 }
@@ -34,9 +35,21 @@ public pushSelectedRecipe(recipe:Recipe):void{
 public getRecipe(index:number): Recipe{
   return this.recipeList[index];
 }
-public deleteRecipe(index:number): void{
+public deleteRecipeByIndex(index:number): void{
   this.recipeList.splice(index,1);
 }
+
+public deleteRecipe(recipe:Recipe): void{
+  //check if the index is not negative because splice will delete items from the array even if the 
+  //index is negative. Negative index means that the delete will start from the end of the array.
+ let index:number =   this.recipeList.indexOf(recipe);
+  if(index >=0){
+      this.recipeList.splice(this.recipeList.indexOf(recipe),1);
+  }
+}
+
+
+
 public addRecipe(recipe:Recipe):void{
   this.recipeList.push(recipe);
 }
