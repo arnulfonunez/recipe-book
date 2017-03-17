@@ -48,9 +48,13 @@ public deleteRecipe(recipe:Recipe): void{
   }
 }
 
-
-
 public addRecipe(recipe:Recipe):void{
   this.recipeList.push(recipe);
 }
+
+public editRecipe(oldRecipe:Recipe, newRecipe:Recipe): void{
+  let index:number = this.recipeList.indexOf(oldRecipe);
+  this.recipeList[index] = newRecipe;
+}
+
 }

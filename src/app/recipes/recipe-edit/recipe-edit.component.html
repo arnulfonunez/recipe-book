@@ -1,3 +1,107 @@
-<p>
-  Edit works
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!myForm.valid">Save</button>
+          <a class="btn btn-danger" type="button" (click)="onCancel()">Cancel</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Recipe Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              [(ngModel)]="recipe.name"
+              name="name" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="image-url">Image Url</label>
+            <input
+              type="text"
+              id="image-url"
+              class="form-control" 
+              [(ngModel)]="recipe.imagePath" 
+              name="imagePath"
+              required
+              #imagePathUrl>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="img">
+            <img [src]="imagePathUrl.value">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="content">Recipe Description</label>
+            <textarea
+              type="text"
+              id="content"
+              rows="6"
+              class="form-control"
+              [(ngModel)]="recipe.description"
+              name="description" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- <ul class="list-group" ngModel name="ingredients"> -->
+            <ul class="list-group" name="ingredients">
+            <div class="row" *ngFor="let ingredient of recipe.ingredients; let i = index;">
+              <!-- <div ngModel name="{{i}}"> -->
+                <div>
+
+                <div class="col-sm-5">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="ingredient.name" name="ingredientName_{{i}}"
+                    required [disabled]="true">
+                </div>
+                <div class="col-sm-5">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="ingredient.amount"
+                    name="ingredientAmount_{{i}}"
+                    required>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-danger" type="button" (click)="onDeleteIngredient(i)">X</button>
+                </div>
+              </div>
+              <br><br>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="form-group row">
+      <div class="col-md-5"><input type="text" class="form-control" #ingrName></div>
+      <div class="col-md-5"><input type="number" class="form-control" #ingrAmount></div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-primary" (click)="onAddIngredient(ingrName.value,ingrAmount.value)">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

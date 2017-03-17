@@ -1,7 +1,8 @@
+import { EventEmitter } from '@angular/common/src/facade/async';
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { Ingredient } from '../../models/ingredient';
 import { NgForm } from '@angular/forms/src/directives';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'an-shopping-list-add',
@@ -11,6 +12,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class ShoppingListAddComponent implements OnInit, OnChanges {
 
 @Input() public ingredient:Ingredient = null;
+@Output() public clearedEvent:EventEmitter<any>= new EventEmitter<any>();
 public isAdd:boolean = true;
 
  constructor(private shoppingListService:ShoppingListService) { }
@@ -50,8 +52,9 @@ ngOnChanges(changes){
   
   public onClear():void{
     console.log('clear');
-    this.ingredient = new Ingredient(null,null);
+    //this.ingredient = new Ingredient(null,null);
     this.isAdd = true;
+    this.clearedEvent.emit(null);
   }
 
   public onDelete():void{

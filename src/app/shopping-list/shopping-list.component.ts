@@ -22,4 +22,8 @@ public onSelectedIngredient(ingredient:Ingredient):void{
  this.selectedIngredient = ingredient;
 }
 
+public onClear():void{
+  this.selectedIngredient = new Ingredient(null,null);
+}
+
 }
