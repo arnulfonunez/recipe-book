@@ -16,6 +16,7 @@ public isAdd:boolean = true;
  constructor(private shoppingListService:ShoppingListService) { }
 
   ngOnInit() {
+    this.ingredient = new Ingredient(null,null);
   }
  
 //This method is called every time that an input element is changed. 
@@ -29,13 +30,33 @@ ngOnChanges(changes){
 }
 
   public onSubmit(ingredient:Ingredient):void{
-    console.log(ingredient.amount);
+    console.log(ingredient.name);
+
+    let newIngredient:Ingredient = new Ingredient(ingredient.name,ingredient.amount);
+
     if(this.isAdd){
-      this.ingredient = new Ingredient(ingredient.name,ingredient.amount);
+      console.log('clear1');
+      this.ingredient = newIngredient;
         this.shoppingListService.addIngredient(this.ingredient);
+        this.onClear();
+    }
+    else{
+      console.log('clear2');
+      this.shoppingListService.editIngredient(this.ingredient,newIngredient);
+      //this.ingredient = newIngredient;
     }
   }
 
   
+  public onClear():void{
+    console.log('clear');
+    this.ingredient = new Ingredient(null,null);
+    this.isAdd = true;
+  }
+
+  public onDelete():void{
+    this.shoppingListService.deleteIngredient(this.ingredient);
+    this.onClear();
+  }
 
 }

@@ -33,4 +33,8 @@ export class ShoppingListService {
 
   }
 
+public editIngredient(oldIngredient:Ingredient, newIngredient:Ingredient):void{
+  this.ingredientList[this.ingredientList.indexOf(oldIngredient)] = newIngredient;
+}
+
 }
