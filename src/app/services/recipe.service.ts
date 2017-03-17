@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/Rx';
+import { HttpService } from './http.service';
 import { Recipe } from '../models/recipe';
 import {Ingredient} from '../models/ingredient';
 import { Injectable,EventEmitter } from '@angular/core';
@@ -5,10 +7,14 @@ import { Injectable,EventEmitter } from '@angular/core';
 @Injectable()
 export class RecipeService {
 
+private subscription:Subscription;
 private recipeList:Recipe[] = [];
 public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>(); //no longer used
 
-  constructor() { 
+
+
+
+  constructor(private httpService:HttpService) { 
 
     //Start
     let limit:number = 5;
@@ -56,5 +62,21 @@ public editRecipe(oldRecipe:Recipe, newRecipe:Recipe): void{
   let index:number = this.recipeList.indexOf(oldRecipe);
   this.recipeList[index] = newRecipe;
 }
+
+public refreshRecipes():void{
+  this.subscription = this.httpService.getRecipeData().subscribe(
+    (data) =>{
+      console.log(data);
+    },
+    (error) =>
+    {
+      console.log(error);
+    }
+
+  );
+}
+
+
+
 
 }
