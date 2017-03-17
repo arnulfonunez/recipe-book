@@ -44,7 +44,7 @@ public deleteRecipe(recipe:Recipe): void{
   //index is negative. Negative index means that the delete will start from the end of the array.
  let index:number =   this.recipeList.indexOf(recipe);
   if(index >=0){
-      this.recipeList.splice(this.recipeList.indexOf(recipe),1);
+      this.recipeList.splice(index,1);
   }
 }
 

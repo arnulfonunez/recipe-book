@@ -1,0 +1,14 @@
+.an-invalid{
+    border: 1px solid lightcoral;
+    background: lightyellow;
+}
+
+.an-required-msg{
+    color: red;
+}
+
+/*
+.ng-invalid{
+    border: 1px solid red;
+}
+*/

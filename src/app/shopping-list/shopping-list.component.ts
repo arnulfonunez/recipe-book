@@ -10,11 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class ShoppingListComponent implements OnInit {
 
   public ingredientList:Ingredient[] = [];
+  public selectedIngredient:Ingredient = null;
 
   constructor(private shoppingListService:ShoppingListService) { }
 
   ngOnInit() {
     this.ingredientList = this.shoppingListService.getIngredientList();
   }
+
+public onSelectedIngredient(ingredient:Ingredient):void{
+ this.selectedIngredient = ingredient;
+}
 
 }

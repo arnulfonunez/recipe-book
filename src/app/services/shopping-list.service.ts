@@ -19,9 +19,18 @@ export class ShoppingListService {
     this.ingredientList.push(...ingredients);
   }
 
-  public deleteIngredient(index:number):void{
+  public deleteIngredientByIndex(index:number):void{
     this.ingredientList.splice(index,1);
   }
-  
+
+  public deleteIngredient(ingredient:Ingredient):void{
+    //Check if the index is not negative because splice will delete items from the array
+    //even if the indcex is negative. Negative index means that the delete will start from the end of the array.
+    let index:number = this.ingredientList.indexOf(ingredient);
+    if(index >= 0){
+      this.ingredientList.splice(index,1);
+    }
+
+  }
 
 }
