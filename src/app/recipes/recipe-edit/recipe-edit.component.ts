@@ -36,6 +36,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           }
           else{
             this.isNew = true;
+             this.recipe = new Recipe(null,null,null,[]);
           }
       }
       ,

@@ -1,23 +1,18 @@
 import { Recipe } from '../models/recipe';
 import { Observable } from 'rxjs/Rx';
 import { Utils } from './Utils';
-import { Http, Response } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import 'rxjs/Rx';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable()
 export class HttpService {
 
-  public static readonly baseUrl:string = "http://" + Utils.firebaseDatabaseURL;
+  public static readonly baseUrl:string = Utils.firebaseDatabaseURL;
 
-public static readonly firebaseApiKey:string = "AIzaSyAyoPs4xhygUUzz4fOSZZka7z4W5qgY8fs"; 
-public static readonly firebaseAuthDomain:string = "ionic2-recipe-c0dd5.firebaseapp.com"; 
-public static readonly firebaseDatabaseURL:string = "https://ionic2-recipe-c0dd5.firebaseio.com"; 
-public static readonly firebaseStorageBucket:string = "ionic2-recipe-c0dd5.appspot.com"; 
-public static readonly firebaseMessagingSenderId:string = "104588216188"; 
-public static readonly firebaseShoppingListJson:string = "shoppinglist.json"; 
-public static readonly firebaseRecipeListJson:string = "recipeList.json"; 
-
-  constructor(private http:Http) { }
+  constructor(private http:Http,
+  private authService:AuthenticationService) { }
 
  public getRecipeData():Observable<any>{
    let url:string = HttpService.baseUrl + "/" + Utils.firebaseRecipeListJson;
@@ -27,15 +22,25 @@ public static readonly firebaseRecipeListJson:string = "recipeList.json";
    });
  }
 
-public storeRecipes(token:string,recipeList:Recipe[]):Observable<Response>{
- let url:string = HttpService.baseUrl + "/" + Utils.firebaseRecipeListJson + '?auth=' + token;
- return this.http.put(url,recipeList).map((Response:Response) => {return Response.json();})
-
+public storeRecipes(recipeList:Recipe[],token:string):Observable<Response>{
+  let userId: string = this.authService.getActiveUser().uid; 
+ let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseRecipeListJson + "?auth=" + token;
+  const body:string = JSON.stringify(recipeList);
+  const headers:Headers = new Headers({
+    'content-type':'application/json'
+  });
+ return this.http.put(url,body,{headers:headers});
 }
 
+public onRetrieve(token:string):Observable<Recipe[]>{
+  let userId: string = this.authService.getActiveUser().uid; 
+  let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseRecipeListJson + '?auth=' + token;
+  return this.http.get(url).map( (response:Response) => {
+    console.log('anunez2');
+    return response.json();
+  });
 }
-
-
+}
 
 /*
 public storeRecipes(token:string):Observable<Response>{ 

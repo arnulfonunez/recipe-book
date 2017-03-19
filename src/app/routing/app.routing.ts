@@ -5,6 +5,8 @@ import { RecipeStartComponent } from '../recipes/recipe-start.component';
 import { ShoppingListComponent } from '../shopping-list/shopping-list.component';
 import { RecipesComponent } from '../recipes/recipes.component';
 import { RouterModule, Routes } from '@angular/router';
+import {SignupComponent} from '../signin/signup/signup.component';
+import {LoginComponent} from '../signin/login/login.component';
 
 //RECIPE ROUTES::::::::::::::::::::
 const RECIPE_ROUTES: Routes =[
@@ -17,7 +19,9 @@ const RECIPE_ROUTES: Routes =[
 
 //MAIN ROUTES::::::::::::::::::::::::::
 const APP_ROUTES: Routes = [
-{path:'', redirectTo:'/recipes',pathMatch:'full'},
+{path:'', redirectTo:'/login',pathMatch:'full'},
+{path:'signup',component:SignupComponent},
+{path:'login',component:LoginComponent},
 {path:'recipes',component:RecipesComponent,children:RECIPE_ROUTES},
 {path:'shopping-list',component:ShoppingListComponent},
 {path:'**', component:NotFoundComponent}
@@ -25,3 +29,5 @@ const APP_ROUTES: Routes = [
 export const appRouting = RouterModule.forRoot(APP_ROUTES);
 //MAIN ROUTES::::::::::::::::::::::::::
 
+
+    

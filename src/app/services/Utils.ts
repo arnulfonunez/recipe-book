@@ -3,13 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Utils{
 
-
-
-public static readonly firebaseApiKey:string = "AIzaSyAyoPs4xhygUUzz4fOSZZka7z4W5qgY8fs"; 
-public static readonly firebaseAuthDomain:string = "ionic2-recipe-c0dd5.firebaseapp.com"; 
-public static readonly firebaseDatabaseURL:string = "https://ionic2-recipe-c0dd5.firebaseio.com"; 
-public static readonly firebaseStorageBucket:string = "ionic2-recipe-c0dd5.appspot.com"; 
-public static readonly firebaseMessagingSenderId:string = "104588216188"; 
+public static readonly firebaseApiKey:string = "AIzaSyB3hPWDosD3Dp_FMJg0lj5N3HB03x-N3g0"; 
+public static readonly firebaseAuthDomain:string = "angular2-recipe-964d3.firebaseapp.com"; 
+public static readonly firebaseDatabaseURL:string = "https://angular2-recipe-964d3.firebaseio.com"; 
+public static readonly firebaseStorageBucket:string = "angular2-recipe-964d3.appspot.com"; 
+public static readonly firebaseMessagingSenderId:string = "72176672091"; 
 public static readonly firebaseShoppingListJson:string = "shoppinglist.json"; 
 public static readonly firebaseRecipeListJson:string = "recipeList.json"; 
 
