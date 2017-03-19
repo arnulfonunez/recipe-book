@@ -1,3 +1,4 @@
+import { AuthGuardService } from '../services/auth-guard.service';
 import { NotFoundComponent } from '../exceptions/not-found/not-found.component';
 import { RecipeDetailComponent } from '../recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from '../recipes/recipe-edit/recipe-edit.component';
@@ -22,9 +23,9 @@ const APP_ROUTES: Routes = [
 {path:'', redirectTo:'/login',pathMatch:'full'},
 {path:'signup',component:SignupComponent},
 {path:'login',component:LoginComponent},
-{path:'recipes',component:RecipesComponent,children:RECIPE_ROUTES},
-{path:'shopping-list',component:ShoppingListComponent},
-{path:'**', component:NotFoundComponent}
+{path:'recipes',component:RecipesComponent,children:RECIPE_ROUTES,canActivate:[AuthGuardService]},
+{path:'shopping-list',component:ShoppingListComponent,canActivate:[AuthGuardService]},
+{path:'**', component:NotFoundComponent,canActivate:[AuthGuardService]}
 ];
 export const appRouting = RouterModule.forRoot(APP_ROUTES);
 //MAIN ROUTES::::::::::::::::::::::::::

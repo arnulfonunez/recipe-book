@@ -1,3 +1,4 @@
+import { Observable, Subject } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import {User} from '../models/User';
@@ -11,8 +12,26 @@ export class AuthenticationService {
 
   constructor(private router:Router) { }
 
-  public isUserAuthenticated():boolean{
-      
+  public isUserAuthenticated():Observable<boolean>{
+      let subject:Subject<boolean> = new Subject<boolean>();
+
+      firebase.auth().onAuthStateChanged(
+          (user) =>
+          {
+              if(user){
+                  subject.next(true);
+              }
+              else
+              {
+                  subject.next(false);
+              }
+          }
+      );
+
+      return subject.asObservable();
+
+      /* this approach may not work because by the time that the page 
+      is loaded, firebase may not be loaded yet.
       let user:any = this.getActiveUser();
       if(user){
           return true;
@@ -21,6 +40,7 @@ export class AuthenticationService {
       {
           return false;
       }
+      */
   }
 
 public signup(user:User ):void { 

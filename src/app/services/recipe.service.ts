@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { Response } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { HttpService } from './http.service';
@@ -13,15 +14,12 @@ private recipeList:Recipe[] = [];
 public recipeSelected:EventEmitter<Recipe> = new EventEmitter<Recipe>(); //no longer used
 public recipesRefreshed:EventEmitter<Recipe[]> = new EventEmitter<Recipe[]>(); //this will be triggered when the data is refreshed from database
 
-
-
-
-  constructor(private httpService:HttpService) { 
+  constructor(private httpService:HttpService,private authService:AuthenticationService) { 
 
     //Start
     /*
-    let limit:number = 5;
-    let ingredientLimit:number = 5;
+    let limit:number = 50;
+    let ingredientLimit:number = 10;
     for(let i =0; i < limit;i++){
       let tempIng:Ingredient[] = [];
       for(let j=0; j < ingredientLimit; j++){
@@ -73,43 +71,60 @@ public editRecipe(oldRecipe:Recipe, newRecipe:Recipe): void{
   this.recipeList[index] = newRecipe;
 }
 
-/*
-public refreshRecipes():void{
-  this.subscription = this.httpService.getRecipeData().subscribe(
-    (data) =>{
-      console.log(data);
-    },
-    (error) =>
-    {
-      console.log(error);
-    }
-
-  );
-}
-*/
 public storeRecipes():void{
-   this.httpService.storeRecipes(this.recipeList,"").subscribe(
-      (data) => {
-        console.log('Data stored successfully');
-      },
-      (error) =>
-      {
-        console.log(error);
-      }
-    );
+    this.authService.getActiveUser().getToken()
+    .then((token:string) => {
+        this.httpService.storeRecipes(this.recipeList,token).subscribe(
+              (data) => {console.log('Data stored successfully');}
+              ,(error) =>{console.log(error);}
+            );
+    })
+    .catch( (error) => {
+      console.log('Error storing data on server');
+      console.log(error);
+    });
 }
 
+/*
+this.authService.getActiveUser().getToken()
+                  .then(
+                    (token:string) =>{
+                      if(action === 'load'){
+                        this.retrieveRecipes(token);
+                      }
+                      else if(action === 'store'){
+                        this.storeRecipes(token);
+                      }
+                      else{
+                        this.spinner.dismiss();
+                      }
+                    }
+                  ).catch(
+                    error =>{
+                      this.spinner.dismiss();
+                      this.utils.createToast(error.message).present();
+                    }
+                  )
+
+*/
 public onRetrieve():void{
+this.authService.getActiveUser().getToken()
+.then((token:string) =>{
+            this.httpService.onRetrieve(token).subscribe(
+                (data: Recipe[]) =>{
+                    this.recipeList = data;
+                    this.emitRecipesRefreshed(); //Notify components that the data has been refreshed.
+                },
+                (error) =>
+                {
+                  console.log(error);
+                }
+              );
+})
+.catch((error) => {
+    console.log('Error retrieving data from server');
+    console.log(error);
+});
    
-   this.httpService.onRetrieve("").subscribe(
-     (data: Recipe[]) =>{
-        this.recipeList = data;
-        this.emitRecipesRefreshed(); //Notify components that the data has been refreshed.
-     },
-     (error) =>
-     {
-       console.log(error);
-     }
-   );
 }
 }

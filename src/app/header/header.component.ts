@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-//import {  Subscription } from 'rxjs/Rx';
+import {  Subscription } from 'rxjs/Rx';
 import { RecipeService } from '../services/recipe.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
@@ -10,13 +10,29 @@ import {AuthenticationService} from '../services/authentication.service';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
 
   //private subscription:Subscription = null;
+  private isAuthenticated:boolean = false;
+  private subscription:Subscription= null;
 
-  constructor(private recipeService:RecipeService,
-  private router:Router,
-  private authService:AuthenticationService) { }
+  constructor(private recipeService:RecipeService,private router:Router,
+  private authService:AuthenticationService) { 
+
+      this.subscription=  this.authService.isUserAuthenticated().subscribe(
+        (authStatus) =>{
+          this.isAuthenticated = authStatus;
+        }
+        ,
+        (error) =>{
+          this.isAuthenticated = false;
+        }
+        );
+  }
+
+ngOnDestroy(){
+  this.subscription.unsubscribe();
+}
 
   ngOnInit() {
 
@@ -37,9 +53,12 @@ public onLogout():void{
 }
 
 
-public isAuthenticated():boolean{
-  return this.authService.isUserAuthenticated();
+public isAuth():boolean{
+  return this.isAuthenticated;
 }
 
+ngDoCheck(){
+  console.log('checked');
+}
 
 }

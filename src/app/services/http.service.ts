@@ -22,6 +22,39 @@ export class HttpService {
    });
  }
 
+/*
+this.authService.getActiveUser().getToken()
+                  .then(
+                    (token:string) =>{
+                      if(action === 'load'){
+                        this.retrieveRecipes(token);
+                      }
+                      else if(action === 'store'){
+                        this.storeRecipes(token);
+                      }
+                      else{
+                        this.spinner.dismiss();
+                      }
+                    }
+                  ).catch(
+                    error =>{
+                      this.spinner.dismiss();
+                      this.utils.createToast(error.message).present();
+                    }
+                  )
+
+   this.httpService.storeRecipes(this.recipeList,"").subscribe(
+      (data) => {
+        console.log('Data stored successfully');
+      },
+      (error) =>
+      {
+        console.log(error);
+      }
+    );
+
+*/
+
 public storeRecipes(recipeList:Recipe[],token:string):Observable<Response>{
   let userId: string = this.authService.getActiveUser().uid; 
  let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseRecipeListJson + "?auth=" + token;
@@ -41,6 +74,7 @@ public onRetrieve(token:string):Observable<Recipe[]>{
   });
 }
 }
+
 
 /*
 public storeRecipes(token:string):Observable<Response>{ 
