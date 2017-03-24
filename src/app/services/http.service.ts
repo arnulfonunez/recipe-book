@@ -1,3 +1,4 @@
+import { Ingredient } from '../models/ingredient';
 import { Recipe } from '../models/recipe';
 import { Observable } from 'rxjs/Rx';
 import { Utils } from './Utils';
@@ -10,6 +11,7 @@ import {AuthenticationService} from './authentication.service';
 export class HttpService {
 
   public static readonly baseUrl:string = Utils.firebaseDatabaseURL;
+  
 
   constructor(private http:Http,
   private authService:AuthenticationService) { }
@@ -55,6 +57,15 @@ this.authService.getActiveUser().getToken()
 
 */
 
+public storeShoppingList(shoppingList:Ingredient[], token:string):Observable<Response>{
+  let userId:string = this.authService.getActiveUser().uid;
+  let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseShoppingListJson + "?auth=" + token;
+  const body: string = JSON.stringify(shoppingList);
+  const headers:Headers = new Headers({'content=type':'application/json'});
+  return this.http.put(url,body,{headers:headers});
+
+}
+
 public storeRecipes(recipeList:Recipe[],token:string):Observable<Response>{
   let userId: string = this.authService.getActiveUser().uid; 
  let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseRecipeListJson + "?auth=" + token;
@@ -69,10 +80,17 @@ public onRetrieve(token:string):Observable<Recipe[]>{
   let userId: string = this.authService.getActiveUser().uid; 
   let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseRecipeListJson + '?auth=' + token;
   return this.http.get(url).map( (response:Response) => {
-    console.log('anunez2');
     return response.json();
   });
 }
+
+retrieveShoppingList(token:string):Observable<Ingredient[]>{
+  let userId:string = this.authService.getActiveUser().uid;
+  let url:string = HttpService.baseUrl + "/" + userId + "/" + Utils.firebaseShoppingListJson + "?auth=" + token;
+  return this.http.get(url).map((response:Response) => {return response.json()});
+}
+
+
 }
 
 
@@ -103,33 +121,21 @@ public storeRecipes(token:string):Observable<Response>{
 65         } 
 66     ); 
 67 } 
-
 */
-
 
 /*
 export class AuthService{ 
 6     public signup(user:User):firebase.Promise<any> { 
 7         return firebase.auth().createUserWithEmailAndPassword(user.email,user.password); 
 8     } 
-9 
- 
 10     public login(user:User):firebase.Promise<any>{ 
 11         return firebase.auth().signInWithEmailAndPassword(user.email,user.password); 
 12     } 
-13 
- 
 14     public logout():firebase.Promise<any>{ 
 15         return firebase.auth().signOut(); 
 16     } 
-17 
- 
 18     public getActiveUser(){ 
 19         return firebase.auth().currentUser 
 20     } 
-21 
- 
 22 } 
-23 
-
 */

@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Rx';
 import { RecipeService } from '../../services/recipe.service';
 import { Ingredient } from '../../models/ingredient';
-import { EventEmitter } from '@angular/common/src/facade/async';
+//import { EventEmitter } from '@angular/common/src/facade/async';
 import { Recipe } from '../../models/recipe';
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 

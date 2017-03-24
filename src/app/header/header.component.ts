@@ -58,7 +58,7 @@ public isAuth():boolean{
 }
 
 ngDoCheck(){
-  console.log('checked');
+  //console.log('ngDoCheck');
 }
 
 }

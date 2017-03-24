@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/common/src/facade/async';
+import { EventEmitter } from '@angular/core';
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { Ingredient } from '../../models/ingredient';
 import { NgForm } from '@angular/forms/src/directives';

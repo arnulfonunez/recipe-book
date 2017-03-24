@@ -85,6 +85,28 @@ public storeRecipes():void{
     });
 }
 
+public onRetrieve():void{
+this.authService.getActiveUser().getToken()
+.then((token:string) =>{
+            this.httpService.onRetrieve(token).subscribe(
+                (data: Recipe[]) =>{
+                    this.recipeList = data;
+                    this.emitRecipesRefreshed(); //Notify components that the data has been refreshed.
+                },
+                (error) =>
+                {
+                  console.log(error);
+                }
+              );
+})
+.catch((error) => {
+    console.log('Error retrieving data from server');
+    console.log(error);
+});
+   
+}
+}
+
 /*
 this.authService.getActiveUser().getToken()
                   .then(
@@ -107,24 +129,3 @@ this.authService.getActiveUser().getToken()
                   )
 
 */
-public onRetrieve():void{
-this.authService.getActiveUser().getToken()
-.then((token:string) =>{
-            this.httpService.onRetrieve(token).subscribe(
-                (data: Recipe[]) =>{
-                    this.recipeList = data;
-                    this.emitRecipesRefreshed(); //Notify components that the data has been refreshed.
-                },
-                (error) =>
-                {
-                  console.log(error);
-                }
-              );
-})
-.catch((error) => {
-    console.log('Error retrieving data from server');
-    console.log(error);
-});
-   
-}
-}
